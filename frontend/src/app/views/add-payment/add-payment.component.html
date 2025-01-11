@@ -1,0 +1,19 @@
+<form [formGroup]="addPaymentForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="First Name" formControlName="payee_first_name" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Last Name" formControlName="payee_last_name" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Currency" formControlName="currency">
+        <mat-option *ngFor="let currency of currencies" [value]="currency">
+          {{ currency }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button type="submit" [disabled]="!addPaymentForm.valid">
+      Add Payment
+    </button>
+  </form>
+  
