@@ -63,7 +63,7 @@ Ensure you have the following installed on your system:
 
 3. Start the Angular development server:
   ```bash
-  ng serve
+  ng serve --proxy-config proxy.conf.json
   ```
 
 ### Proxy Configuration
