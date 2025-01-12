@@ -41,14 +41,6 @@ Ensure you have the following installed on your system:
    ```bash
    uvicorn backend.app.main:app --reload
 
-
-###Frontend Setup
-
-1.Navigate to the frontend directory:
-  ```bash
-  cd frontend
-```
-
 ### Frontend Setup
 
 1. Navigate to the frontend directory:
