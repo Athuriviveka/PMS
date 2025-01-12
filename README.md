@@ -33,11 +33,15 @@ Ensure you have the following installed on your system:
 1. Navigate to the backend directory:
    ```bash
    cd backend
-### Install Dependencies
-```bash
-pip install -r requirements.txt
+2. Install Dependencies
+  ```bash
+  pip install -r requirements.txt
 
-Start the FastAPI server:
+3. Start the FastAPI server:
+   ```bash
+   uvicorn backend.app.main:app --reload
+
+3. Start the FastAPI server:
 uvicorn backend.app.main:app --reload
 
 Frontend Setup
