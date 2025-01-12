@@ -1,32 +1,219 @@
+<mat-card class="overview-card">
+  <mat-card-title>Payments Overview</mat-card-title>
+  <mat-card-subtitle>
+    Manage your payments effectively with the below actions
+  </mat-card-subtitle>
+</mat-card>
+
+
+<div class="filter-controls">
+  <mat-form-field appearance="outline">
+    <mat-label>Filter by Status</mat-label>
+    <mat-select [(ngModel)]="filters.status" (selectionChange)="applyFilters()" >
+      <mat-option value="">All</mat-option>
+      <mat-option value="due_now">Due Now</mat-option>
+      <mat-option value="overdue">Overdue</mat-option>
+      <mat-option value="pending">Pending</mat-option>
+      <mat-option value="completed">Completed</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Search by Email</mat-label>
+    <input
+      matInput
+      placeholder="Enter email"
+      [(ngModel)]="filters.searchByemail"
+      (ngModelChange)="applyFilters()"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Filter by Country</mat-label>
+    <mat-select [(ngModel)]="filters.country" (selectionChange)="applyFilters()">
+      <mat-option value="">All</mat-option>
+      <mat-option value="US">United States</mat-option>
+      <mat-option value="CA">Canada</mat-option>
+      <mat-option value="FR">France</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Search by Name</mat-label>
+    <input
+      matInput
+      placeholder="Enter name"
+      [(ngModel)]="filters.searchByname"
+      (ngModelChange)="applyFilters()"
+    />
+  </mat-form-field>
+</div>
+
+
+<div class="action-buttons">
+  <!-- Add New Payment Button -->
+
+  <button
+    mat-raised-button
+    color="primary"
+    matTooltip="Click to add a new payment"
+    [routerLink]="'/add-payment'"
+    class="add-payment-button"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+
+
+  <!-- Import CSV Button -->
+    <button
+      mat-raised-button
+      matTooltip="Upload payment details from a CSV file"
+      (click)="fileInput.click()"
+      class="import-csv-button"
+    >
+      <mat-icon>file_upload</mat-icon> 
+    </button>
+    <input
+      #fileInput
+      type="file"
+      accept=".csv"
+      style="display: none"
+      (change)="uploadCsv($event)"
+    />
+  
+</div>
+
+<!-- Payments Table -->
 <mat-table [dataSource]="payments" matSort>
-    <ng-container matColumnDef="payee_first_name">
-      <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.payee_first_name }} </mat-cell>
-    </ng-container>
-  
-    <ng-container matColumnDef="payee_last_name">
-      <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.payee_last_name }} </mat-cell>
-    </ng-container>
-  
-    <ng-container matColumnDef="total_due">
-      <mat-header-cell *matHeaderCellDef> Total Due </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.total_due | currency }} </mat-cell>
-    </ng-container>
-  
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <button mat-raised-button (click)="editPayment(element)">Edit</button>
-        <button mat-raised-button color="warn" (click)="deletePayment(element._id)">
-          Delete
-        </button>
-      </mat-cell>
-    </ng-container>
-  
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-  <mat-paginator [length]="totalPayments" [pageSize]="10" (page)="onPageChange($event)">
-  </mat-paginator>
-  
+  <!-- First Name Column -->
+  <ng-container matColumnDef="payee_first_name">
+    <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.payee_first_name }} </mat-cell>
+  </ng-container>
+
+  <!-- Last Name Column -->
+  <ng-container matColumnDef="payee_last_name">
+    <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.payee_last_name }} </mat-cell>
+  </ng-container>
+
+  <!-- Payment Status Column -->
+  <ng-container matColumnDef="payee_payment_status">
+    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.payee_payment_status }} </mat-cell>
+  </ng-container>
+
+  <!-- Due Amount Column -->
+  <ng-container matColumnDef="due_amount">
+    <mat-header-cell *matHeaderCellDef> Amount Due </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{ element.due_amount | currency:element.currency }}
+    </mat-cell>
+  </ng-container>
+
+  <!-- Due Date Column -->
+  <ng-container matColumnDef="payee_due_date">
+    <mat-header-cell *matHeaderCellDef> Due Date </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.payee_due_date | date: 'shortDate' }} </mat-cell>
+  </ng-container>
+
+  <!-- Phone Number Column -->
+  <ng-container matColumnDef="payee_phone_number">
+    <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.payee_phone_number }} </mat-cell>
+  </ng-container>
+
+  <!-- Email Column -->
+  <ng-container matColumnDef="payee_email">
+    <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.payee_email }} </mat-cell>
+  </ng-container>
+
+  <!-- Address Column -->
+  <ng-container matColumnDef="payee_address">
+    <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{ element.payee_address_line_1 }}, {{ element.payee_city }}, {{ element.payee_country }} - {{ element.payee_postal_code }}
+    </mat-cell>
+  </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <!-- Edit Payment Icon -->
+      <button
+        mat-icon-button
+        matTooltip="Edit Payment"
+        [routerLink]="['/edit-payment', element._id]" 
+        class="edit-button">
+        <mat-icon class="edit-icon">edit</mat-icon>
+      </button>
+
+
+      <!-- Delete Payment Icon -->
+      <button
+        mat-icon-button
+        matTooltip="Delete Payment"
+        (click)="deletePayment(element._id)"
+        class="delete-button"
+      >
+        <mat-icon class="delete-icon">delete</mat-icon>
+      </button>
+
+      <!-- Download Evidence Icon -->
+        <button
+          *ngIf="element.evidence_filename"
+          mat-icon-button
+          matTooltip="Download Evidence"
+          (click)="downloadEvidence(element._id)"
+          class="download-button"
+        >
+          <mat-icon class="download-icon">cloud_download</mat-icon>
+      </button>
+
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<!-- Pagination Section -->
+<div class="pagination-container">
+  <div class="pagination-controls">
+    <button
+      mat-icon-button
+      aria-label="First page"
+      [disabled]="currentPage === 1"
+      (click)="onFirstPage()"
+    >
+      <mat-icon>first_page</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="Previous page"
+      [disabled]="currentPage === 1"
+      (click)="onPreviousPage()"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button
+      mat-icon-button
+      aria-label="Next page"
+      [disabled]="currentPage === totalPages"
+      (click)="onNextPage()"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="Last page"
+      [disabled]="currentPage === totalPages"
+      (click)="onLastPage()"
+    >
+      <mat-icon>last_page</mat-icon>
+    </button>
+  </div>
+</div>

@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: '', component: MainScreenComponent },
   { path: 'add-payment', component: AddPaymentComponent },
   { path: 'edit-payment/:id', component: EditPaymentComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

@@ -1,19 +1,251 @@
-<form [formGroup]="addPaymentForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-      <input matInput placeholder="First Name" formControlName="payee_first_name" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Last Name" formControlName="payee_last_name" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="Currency" formControlName="currency">
-        <mat-option *ngFor="let currency of currencies" [value]="currency">
-          {{ currency }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button mat-raised-button type="submit" [disabled]="!addPaymentForm.valid">
-      Add Payment
-    </button>
-  </form>
-  
+<div class="add-payment-wrapper">
+  <div class="add-payment-container">
+    <!-- Back Button -->
+    <div class="back-button-container">
+      <button mat-button color="primary" [routerLink]="'/'">
+        <mat-icon>arrow_back</mat-icon> Back to Payments
+      </button>
+    </div>
+
+    <!-- Page Title -->
+    <h2 class="form-title">Add New Payment</h2>
+
+    <!-- Add Payment Form -->
+    <form [formGroup]="addPaymentForm" (ngSubmit)="onSubmit()" class="payment-form">
+      <div class="form-grid">
+        <!-- First Name -->
+        <mat-form-field appearance="outline">
+          <mat-label>First Name *</mat-label>
+          <input matInput placeholder="Enter your first name" formControlName="payee_first_name" />
+          <mat-error *ngIf="addPaymentForm.get('payee_first_name')?.hasError('required')">
+            First Name is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Last Name -->
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name *</mat-label>
+          <input matInput placeholder="Enter your last name" formControlName="payee_last_name" />
+          <mat-error *ngIf="addPaymentForm.get('payee_last_name')?.hasError('required')">
+            Last Name is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Email -->
+        <mat-form-field appearance="outline">
+          <mat-label>Email *</mat-label>
+          <input matInput placeholder="Enter your email address" formControlName="payee_email" />
+          <mat-error *ngIf="addPaymentForm.get('payee_email')?.hasError('required')">
+            Email is required.
+          </mat-error>
+          <mat-error *ngIf="addPaymentForm.get('payee_email')?.hasError('email')">
+            Enter a valid email address.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Payment Status -->
+        <mat-form-field appearance="outline">
+          <mat-label>Payment Status *</mat-label>
+          <mat-select formControlName="payee_payment_status">
+            <mat-option *ngFor="let status of paymentStatuses" [value]="status">
+              {{ status }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="addPaymentForm.get('payee_payment_status')?.hasError('required')">
+            Payment Status is required.
+          </mat-error>
+        </mat-form-field>
+
+
+        <!-- Due Date -->
+        <mat-form-field appearance="outline">
+          <mat-label>Due Date *</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="Select due date"
+            formControlName="payee_due_date"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon>calendar_today</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="addPaymentForm.get('payee_due_date')?.hasError('required')">
+            Due Date is required.
+          </mat-error>
+        </mat-form-field>
+
+
+        <!-- Country -->
+        <mat-form-field appearance="outline">
+          <mat-label>Country *</mat-label>
+          <mat-select formControlName="payee_country"  (selectionChange)="onCountryChange($event.value)">
+            <mat-option *ngFor="let country of countries" [value]="country.alpha2Code">
+              {{ country.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="addPaymentForm.get('payee_country')?.hasError('required')">
+            Country is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Province/State -->
+        <mat-form-field appearance="outline">
+          <mat-label>Province/State</mat-label>
+          <mat-select formControlName="payee_province_or_state" [disabled]="states.length === 0">
+            <mat-option *ngFor="let state of states" [value]="state.code">
+              {{ state.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        
+
+        <!-- Address Line 1 -->
+        <mat-form-field appearance="outline">
+          <mat-label>Address Line 1 *</mat-label>
+          <input matInput placeholder="Enter your primary address" formControlName="payee_address_line_1" />
+          <mat-error *ngIf="addPaymentForm.get('payee_address_line_1')?.hasError('required')">
+            Address Line 1 is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Address Line 2 -->
+        <mat-form-field appearance="outline">
+          <mat-label>Address Line 2</mat-label>
+          <input matInput placeholder="Enter additional address details (optional)" formControlName="payee_address_line_2" />
+        </mat-form-field>
+
+        <!-- City -->
+        <mat-form-field appearance="outline">
+          <mat-label>City *</mat-label>
+          <mat-select formControlName="payee_city">
+            <mat-option *ngFor="let city of cities" [value]="city">
+              {{ city }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="addPaymentForm.get('payee_city')?.hasError('required')">
+            City is required.
+          </mat-error>
+        </mat-form-field>
+
+
+        <!-- Postal Code -->
+        <mat-form-field appearance="outline">
+          <mat-label>Postal Code *</mat-label>
+          <input matInput placeholder="Enter your postal code" formControlName="payee_postal_code" />
+          <mat-error *ngIf="addPaymentForm.get('payee_postal_code')?.hasError('required')">
+            Postal Code is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Phone Number -->
+        <mat-form-field appearance="outline">
+          <mat-label>Phone Number *</mat-label>
+          <input
+            matInput
+            placeholder="Enter your phone number"
+            formControlName="payee_phone_number"
+            type="text"
+          />
+          <mat-error *ngIf="addPaymentForm.get('payee_phone_number')?.hasError('required')">
+            Phone Number is required.
+          </mat-error>
+          <mat-error *ngIf="addPaymentForm.get('payee_phone_number')?.hasError('pattern')">
+            Enter a valid phone number in the E.164 format.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Discount Percent -->
+        <mat-form-field appearance="outline">
+          <mat-label>Discount (%)</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="Enter discount percentage"
+            formControlName="discount_percent"
+            min="0"
+            max="100"
+          />
+          <mat-error *ngIf="addPaymentForm.get('discount_percent')?.hasError('min')">
+            Discount must be at least 0%.
+          </mat-error>
+          <mat-error *ngIf="addPaymentForm.get('discount_percent')?.hasError('max')">
+            Discount must not exceed 100%.
+          </mat-error>
+          <mat-error *ngIf="addPaymentForm.get('discount_percent')?.hasError('pattern')">
+            Discount must be a valid number with up to 2 decimal points.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Tax Percent -->
+        <mat-form-field appearance="outline">
+          <mat-label>Tax (%)</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="Enter tax percentage"
+            formControlName="tax_percent"
+            min="0"
+            max="100"
+          />
+          <mat-error *ngIf="addPaymentForm.get('tax_percent')?.hasError('min')">
+            Tax must be at least 0%.
+          </mat-error>
+          <mat-error *ngIf="addPaymentForm.get('tax_percent')?.hasError('max')">
+            Tax must not exceed 100%.
+          </mat-error>
+          <mat-error *ngIf="addPaymentForm.get('tax_percent')?.hasError('pattern')">
+            Tax must be a valid number with up to 2 decimal points.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Due Amount -->
+        <mat-form-field appearance="outline">
+          <mat-label>Due Amount *</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="Enter amount due"
+            formControlName="due_amount"
+            step="0.01"
+          />
+          <mat-error *ngIf="addPaymentForm.get('due_amount')?.hasError('required')">
+            Due Amount is required.
+          </mat-error>
+          <mat-error *ngIf="addPaymentForm.get('due_amount')?.hasError('min')">
+            Due Amount must be a positive value.
+          </mat-error>
+          <mat-error *ngIf="addPaymentForm.get('due_amount')?.hasError('pattern')">
+            Due Amount must be a valid number with up to 2 decimal points.
+          </mat-error>
+        </mat-form-field>
+
+
+        <!-- Currency -->
+        <mat-form-field appearance="outline">
+          <mat-label>Currency *</mat-label>
+          <mat-select formControlName="currency">
+            <mat-option *ngFor="let currency of currencies" [value]="currency.code">
+              {{ currency.code }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="addPaymentForm.get('currency')?.hasError('required')">
+            Currency is required.
+          </mat-error>
+        </mat-form-field>
+
+        
+      
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!addPaymentForm.valid || isSubmitting">
+          {{ isSubmitting ? 'Adding...' : 'Add Payment' }}
+        </button>
+        <button mat-button color="warn" type="button" [routerLink]="'/'">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

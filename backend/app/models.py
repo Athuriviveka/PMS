@@ -33,14 +33,12 @@ class Payment(BaseModel):
 
     @validator("payee_country")
     def validate_country(cls, value):
-        # Use pycountry to validate the country code
         if not pycountry.countries.get(alpha_2=value):
             raise ValueError(f"Invalid country code: {value}")
         return value
 
     @validator("currency")
     def validate_currency(cls, value):
-        # Use pycountry to validate the currency code
         if not pycountry.currencies.get(alpha_3=value):
             raise ValueError(f"Invalid currency code: {value}")
         return value

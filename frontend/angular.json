@@ -30,8 +30,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
-            ],
+              "src/styles.scss",
+              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ]
+            ,
             "scripts": []
           },
           "configurations": {
@@ -71,7 +73,12 @@
               "browserTarget": "frontend:build:development"
             }
           },
+          "options": {
+            "allowedHosts": ["691c-2607-fea8-58ee-ba00-c931-48e-2618-2365.ngrok-free.app"],
+            "proxyConfig": "proxy.conf.json"
+          },
           "defaultConfiguration": "development"
+          
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

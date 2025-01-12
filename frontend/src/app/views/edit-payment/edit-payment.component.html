@@ -1,1 +1,145 @@
-<p>edit-payment works!</p>
+<div class="edit-payment-wrapper">
+    <div class="edit-payment-container">
+      <!-- Back Button -->
+      <div class="back-button-container">
+        <button mat-button color="primary" [routerLink]="'/'">
+          <mat-icon>arrow_back</mat-icon> Back to Payments
+        </button>
+      </div>
+  
+      <!-- Page Title -->
+      <h2 class="form-title">Edit Payment</h2>
+  
+      <!-- Edit Payment Form -->
+      <form [formGroup]="editPaymentForm" (ngSubmit)="onSubmit()" class="payment-form">
+        <div class="form-grid">
+          <!-- Payee First Name (Read-Only) -->
+          <mat-form-field appearance="outline">
+            <mat-label>First Name *</mat-label>
+            <input matInput placeholder="Enter first name" formControlName="payee_first_name" readonly />
+          </mat-form-field>
+  
+          <!-- Payee Last Name (Read-Only) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name *</mat-label>
+            <input matInput placeholder="Enter last name" formControlName="payee_last_name" readonly />
+          </mat-form-field>
+  
+          <!-- Due Date (Editable) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Due Date *</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="Select due date" formControlName="payee_due_date" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="editPaymentForm.get('payee_due_date')?.hasError('required')">
+              Due Date is required.
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Due Amount (Editable) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Due Amount *</mat-label>
+            <input matInput type="number" placeholder="Enter amount" formControlName="due_amount" />
+            <mat-error *ngIf="editPaymentForm.get('due_amount')?.hasError('required')">
+              Due Amount is required.
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Payment Status (Editable) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Payment Status *</mat-label>
+            <mat-select formControlName="payee_payment_status">
+              <mat-option *ngFor="let status of paymentStatuses" [value]="status">
+                {{ status }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editPaymentForm.get('payee_payment_status')?.hasError('required')">
+              Payment Status is required.
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Address Line 1 (Read-Only) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Address Line 1 *</mat-label>
+            <input matInput placeholder="Enter primary address" formControlName="payee_address_line_1" readonly />
+          </mat-form-field>
+  
+          <!-- Address Line 2 (Read-Only) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Address Line 2</mat-label>
+            <input matInput placeholder="Enter additional address details" formControlName="payee_address_line_2" readonly />
+          </mat-form-field>
+  
+          <!-- City (Read-Only) -->
+          <mat-form-field appearance="outline">
+            <mat-label>City *</mat-label>
+            <input matInput placeholder="Enter city" formControlName="payee_city" readonly />
+          </mat-form-field>
+  
+          <!-- Country (Read-Only) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Country *</mat-label>
+            <mat-select formControlName="payee_country" [disabled]="true">
+              <mat-option *ngFor="let country of countries" [value]="country.alpha2Code">
+                {{ country.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <!-- Province/State (Read-Only) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Province/State</mat-label>
+            <input matInput placeholder="Enter province/state" formControlName="payee_province_or_state" readonly />
+          </mat-form-field>
+  
+          <!-- Postal Code (Read-Only) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Postal Code *</mat-label>
+            <input matInput placeholder="Enter postal code" formControlName="payee_postal_code" readonly />
+          </mat-form-field>
+  
+          <!-- Phone Number (Read-Only) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Phone Number *</mat-label>
+            <input matInput placeholder="Enter phone number" formControlName="payee_phone_number" readonly />
+          </mat-form-field>
+  
+          <!-- Email (Read-Only) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Email *</mat-label>
+            <input matInput placeholder="Enter email address" formControlName="payee_email" readonly />
+          </mat-form-field>
+  
+          <!-- Currency (Read-Only) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Currency *</mat-label>
+            <mat-select formControlName="currency" [disabled]="true">
+              <mat-option *ngFor="let currency of currencies" [value]="currency.code">
+                {{ currency.code }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <!-- Evidence Upload (Only for Completed Payments) -->
+          <div *ngIf="editPaymentForm.get('payee_payment_status')?.value === 'completed'">
+            <label for="evidenceFile">Upload Evidence *</label>
+            <input type="file" id="evidenceFile" (change)="onFileSelected($event)" accept=".pdf,.jpg,.png" />
+          </div>
+        </div>
+  
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="isUpdateButtonDisabled()"
+          >
+            {{ isSubmitting ? 'Updating...' : 'Update Payment' }}
+          </button>
+          <button mat-button color="warn" type="button" [routerLink]="'/'">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

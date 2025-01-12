@@ -1,0 +1,206 @@
+/* General Body Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    background-color: #f4f7fc;
+  }
+  
+  /* Action Buttons Styling */
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  
+    button {
+      margin-left: 8px;
+      font-size: 16px;
+  
+      &.add-payment-button {
+        background-color: #4caf50; /* Green background */
+        color: white;
+  
+        &:hover {
+          background-color: #43a047; /* Darker green on hover */
+        }
+      }
+  
+      &.import-csv-button {
+        background-color: #1976d2; /* Blue background */
+        color: white;
+  
+        &:hover {
+          background-color: #1565c0; /* Darker blue on hover */
+        }
+      }
+  
+      mat-icon {
+        margin-right: 8px;
+        color: white; /* Icon matches text color */
+      }
+    }
+  }
+  
+  /* Overview Card Styling */
+  .overview-card {
+    background: linear-gradient(45deg, #42a5f5, #64b5f6);
+    color: white;
+    padding: 16px;
+    margin-bottom: 24px;
+    border-radius: 8px;
+  
+    mat-card-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  
+    mat-card-subtitle {
+      font-size: 18px;
+      font-style: italic;
+    }
+  }
+  
+  /* Table Styling */
+  mat-table {
+    margin: 32px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+    border: 1px solid #b0bec5;
+  
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+    }
+  }
+  
+  mat-header-row,
+  mat-row {
+    border-bottom: 1px solid #b0bec5;
+  }
+  
+  /* Row Colors with Reduced Height */
+  mat-row {
+    font-size: 18px;
+    padding: 12px 16px; /* Reduced padding for height adjustment */
+    line-height: 1.5; /* Adjust line height for compactness */
+  
+    &:nth-child(odd) {
+      background-color: #f0f0f0; /* Light grey for odd rows */
+    }
+  
+    &:nth-child(even) {
+      background-color: #d9d9d9; /* Dark grey for even rows */
+    }
+  
+    &:hover {
+      background-color: #bcbcbc; /* Slightly darker grey on hover */
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  }
+  
+  mat-header-cell {
+    background-color: #e3f2fd;
+    color: #0d47a1;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: left;
+    padding: 12px 16px; /* Adjusted padding for header cell */
+  }
+  
+  mat-cell {
+    font-size: 18px;
+    padding: 12px 16px; /* Adjusted padding for data cell */
+  }
+  
+  /* Table Borders */
+  mat-table,
+  mat-header-row,
+  mat-row {
+    border-left: 1px solid #b0bec5;
+    border-right: 1px solid #b0bec5;
+  }
+  
+  mat-header-row:first-child {
+    border-top: 1px solid #b0bec5;
+  }
+  
+  mat-row:last-child {
+    border-bottom: 1px solid #b0bec5;
+  }
+  
+  /* Action Icons in Table */
+  mat-icon {
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+  
+    &.edit-icon {
+      color: #4caf50; /* Green for Edit */
+  
+      &:hover {
+        color: #388e3c; /* Darker green on hover */
+        transform: scale(1.2);
+      }
+    }
+  
+    &.delete-icon {
+      color: #f44336; /* Red for Delete */
+  
+      &:hover {
+        color: #d32f2f; /* Darker red on hover */
+        transform: scale(1.2);
+      }
+    }
+  }
+  
+  /* Pagination Styling */
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+  
+      button {
+        margin: 0 8px;
+      }
+  
+      span {
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .filter-controls {
+    display: flex;
+    flex-wrap: wrap; /* Make it responsive */
+    gap: 16px; /* Space between filter elements */
+    margin-bottom: 24px; /* Space below the filter section */
+  
+    mat-form-field {
+      flex: 1 1 200px; /* Flexible width with a minimum size */
+      max-width: 300px; /* Set a maximum width */
+      background: #f9f9f9; /* Light background for better visibility */
+      border-radius: 8px; /* Rounded corners */
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+  
+    mat-input-element {
+      font-size: 14px; /* Consistent font size */
+      padding: 8px 12px; /* Add padding inside input */
+    }
+  
+    mat-select {
+      font-size: 14px; /* Adjust dropdown font size */
+    }
+  }
+  
+  mat-select-panel {
+    z-index: 1050 !important; /* Ensure dropdown is above the main screen */
+  }
+  
+  

@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "angularx-flatpickr": "^7.2.0",
+    "flatpickr": "^4.6.13",
     "ngx-pagination": "^6.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
