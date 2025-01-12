@@ -61,3 +61,27 @@ Ensure you have the following installed on your system:
 ### Proxy Configuration
 
 Configure the Angular proxy (proxy.conf.json) to route /api calls to http://localhost:8000.
+
+
+PMS/                              # Root of the project
+├── backend                       # Contains the FastAPI application
+│   ├── .gitignore               # Defines files/folders Git should ignore
+│   ├── Procfile                 # Used by Heroku or similar deployment services
+│   ├── requirements.txt         # Python dependencies for the backend
+│   ├── app                      # Core FastAPI application folder
+│   │   ├── main.py              # Main entry point for the FastAPI app
+│   │   ├── models.py            # Database models
+│   │   ├── routes.py            # API endpoint definitions
+│   │   └── ...                  # Other backend modules
+│   ├── db                       # Database-related scripts and utilities
+│   ├── tests                    # Contains test files
+│   └── ...                      # Additional backend files/folders
+├── frontend                     # Houses the Angular application
+│   ├── pms                      # Main Angular project folder
+│   │   ├── angular.json         # Angular CLI configuration (build/serve settings)
+│   │   ├── package.json         # Lists Node.js dependencies
+│   │   ├── proxy.conf.json      # Proxy configuration to route API calls to the backend
+│   │   ├── src                  # Angular source code (components, services, etc.)
+│   │   └── ...                  # Other Angular config files/folders
+└── README.md                    # Provides an overview and setup instructions
+
