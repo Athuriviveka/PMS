@@ -37,3 +37,22 @@ Ensure you have the following installed on your system:
 ```bash
 pip install -r requirements.txt
 
+Start the FastAPI server:
+uvicorn backend.app.main:app --reload
+
+Frontend Setup
+
+Navigate to the frontend directory:
+cd frontend
+
+Install dependencies:
+npm install
+
+Start the Angular development server:
+ng serve
+
+Proxy Configuration
+
+Configure the Angular proxy (proxy.conf.json) to route /api calls to http://localhost:8000.
+
+
