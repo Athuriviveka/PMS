@@ -80,7 +80,7 @@ body {
   
   /* Row Colors with Reduced Height */
   mat-row {
-    font-size: 18px;
+    font-size: 30px;
     padding: 12px 16px; /* Reduced padding for height adjustment */
     line-height: 1.5; /* Adjust line height for compactness */
   
@@ -109,8 +109,8 @@ body {
   }
   
   mat-cell {
-    font-size: 18px;
-    padding: 12px 16px; /* Adjusted padding for data cell */
+    font-size: 10px;
+    padding: 10px 14px; /* Adjusted padding for data cell */
   }
   
   /* Table Borders */
@@ -201,6 +201,22 @@ body {
   
   mat-select-panel {
     z-index: 1050 !important; /* Ensure dropdown is above the main screen */
+  }
+
+  
+  @media (max-width: 768px) {
+    .mat-row, .mat-header-row {
+      height: 20px; /* Reduce row height on smaller screens */
+    }
+  
+    .mat-card {
+      font-size: 12px; /* Smaller font size for mobile */
+      padding: 6px; /* Adjust padding */
+    }
+  
+    .mat-card-title {
+      font-size: 15px; /* Adjust title size */
+    }
   }
   
   

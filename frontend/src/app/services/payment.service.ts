@@ -45,6 +45,11 @@ export class PaymentService {
     return this.http.post(`${this.apiUrl}/payments`, data);
   }
 
+  getAvailableCountries(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/countries`);
+  }
+  
+
   deletePayment(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/payments/${id}`);
   }

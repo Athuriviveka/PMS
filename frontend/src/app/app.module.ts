@@ -19,6 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
     AppComponent,
     MainScreenComponent,
     AddPaymentComponent,
-    EditPaymentComponent
+    EditPaymentComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { PaymentService } from '../../services/payment.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-main-screen',
@@ -27,6 +28,8 @@ displayedColumns: string[] = [
   currentPage = 1;
   pageSize = 10;
   isLoading = false;
+  countries: { code: string; name: string }[] = []; // List of countries for the dropdown
+
 
   // Filter values
   filters: { status?: string; email?: string; country?: string; searchByname?: string; searchByemail?: string} = {};
@@ -43,6 +46,7 @@ displayedColumns: string[] = [
   ) {}
 
   ngOnInit() {
+    this.fetchCountries(); // Fetch countries
     this.fetchPayments(this.currentPage, this.pageSize);
   }
 
@@ -58,6 +62,18 @@ displayedColumns: string[] = [
       (error) => {
         this.isLoading = false;
         this.showErrorSnackBar(error);
+      }
+    );
+  }
+
+  fetchCountries() {
+    this.paymentService.getAvailableCountries().subscribe(
+      (response: any) => {
+        this.countries = response.countries;
+      },
+      (error) => {
+        console.error('Failed to fetch countries:', error);
+        this.showErrorSnackBar('Failed to fetch available countries.');
       }
     );
   }
@@ -103,16 +119,29 @@ displayedColumns: string[] = [
   
 
   deletePayment(id: string) {
-    this.paymentService.deletePayment(id).subscribe(
-      () => {
-        this.showSuccessSnackBar('Payment deleted successfully!');
-        this.fetchPayments(this.currentPage, this.pageSize);
-      },
-      (error) => {
-        this.showErrorSnackBar(error);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {
+        title: 'Delete Payment',
+        message: 'Are you sure you want to delete this payment?'
       }
-    );
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.paymentService.deletePayment(id).subscribe(
+          () => {
+            this.showSuccessSnackBar('Payment deleted successfully!');
+            this.fetchPayments(this.currentPage, this.pageSize);
+          },
+          (error) => {
+            this.showErrorSnackBar('Failed to delete payment.');
+          }
+        );
+      }
+    });
   }
+  
 
   uploadCsv(event: any) {
     const file: File = event.target.files[0];

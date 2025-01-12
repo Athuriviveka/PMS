@@ -1,0 +1,35 @@
+.dialog-container {
+    text-align: center;
+    padding: 5px;
+  }
+  
+  .dialog-title {
+    color: #0c0808; 
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  .dialog-content {
+    color: #0c0808;
+    font-size: 14px;
+    margin: 10px 0;
+  }
+  
+  .dialog-actions {
+    display: flex;
+    // justify-content: space-between;
+  }
+  
+  .cancel-button {
+    color: #f44336; // Red for the cancel button
+  }
+  
+  .confirm-button {
+    background-color: #2196f3; // Blue for the confirm button
+    color: #fff;
+  
+    &:hover {
+      background-color: #1e88e5;
+    }
+  }
+  

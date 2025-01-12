@@ -32,11 +32,12 @@
     <mat-label>Filter by Country</mat-label>
     <mat-select [(ngModel)]="filters.country" (selectionChange)="applyFilters()">
       <mat-option value="">All</mat-option>
-      <mat-option value="US">United States</mat-option>
-      <mat-option value="CA">Canada</mat-option>
-      <mat-option value="FR">France</mat-option>
+      <mat-option *ngFor="let country of countries" [value]="country.code">
+        {{ country.name }}
+      </mat-option>
     </mat-select>
   </mat-form-field>
+  
 
   <mat-form-field appearance="outline">
     <mat-label>Search by Name</mat-label>
