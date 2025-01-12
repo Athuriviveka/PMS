@@ -62,26 +62,65 @@ Ensure you have the following installed on your system:
 
 Configure the Angular proxy (proxy.conf.json) to route /api calls to http://localhost:8000.
 
+<ul>
+  <li>
+    PMS/ 
+    <span style="color: #777;"># Root of the project</span>
+    <ul>
+      <li>
+        backend 
+        <span style="color: #777;"># Contains the FastAPI application</span>
+        <ul>
+          <li>.gitignore <span style="color: #777;"># Defines files/folders Git should ignore</span></li>
+          <li>Procfile <span style="color: #777;"># Used by Heroku or similar deployment services</span></li>
+          <li>requirements.txt <span style="color: #777;"># Python dependencies for the backend</span></li>
+          <li>
+            app 
+            <span style="color: #777;"># Core FastAPI application folder</span>
+            <ul>
+              <li>main.py <span style="color: #777;"># Main entry point for the FastAPI app</span></li>
+              <li>models.py <span style="color: #777;"># Database models</span></li>
+              <li>routes.py <span style="color: #777;"># API endpoint definitions</span></li>
+              <li>... <span style="color: #777;"># Other backend modules</span></li>
+            </ul>
+          </li>
+          <li>
+            db 
+            <span style="color: #777;"># Database-related scripts and utilities</span>
+          </li>
+          <li>
+            tests
+            <span style="color: #777;"># Contains test files</span>
+          </li>
+          <li>... <span style="color: #777;"># Additional backend files/folders</span></li>
+        </ul>
+      </li>
+      <li>
+        frontend 
+        <span style="color: #777;"># Houses the Angular application</span>
+        <ul>
+          <li>
+            pms 
+            <span style="color: #777;"># Main Angular project folder</span>
+            <ul>
+              <li>angular.json <span style="color: #777;"># Angular CLI configuration (build/serve settings)</span></li>
+              <li>package.json <span style="color: #777;"># Lists Node.js dependencies</span></li>
+              <li>proxy.conf.json <span style="color: #777;"># Proxy configuration to route API calls to the backend</span></li>
+              <li>
+                src 
+                <span style="color: #777;"># Angular source code (components, services, etc.)</span>
+              </li>
+              <li>... <span style="color: #777;"># Other Angular config files/folders</span></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        README.md 
+        <span style="color: #777;"># Provides an overview and setup instructions</span>
+      </li>
+    </ul>
+  </li>
+</ul>
 
-PMS/                              # Root of the project
-├── backend                       # Contains the FastAPI application
-│   ├── .gitignore               # Defines files/folders Git should ignore
-│   ├── Procfile                 # Used by Heroku or similar deployment services
-│   ├── requirements.txt         # Python dependencies for the backend
-│   ├── app                      # Core FastAPI application folder
-│   │   ├── main.py              # Main entry point for the FastAPI app
-│   │   ├── models.py            # Database models
-│   │   ├── routes.py            # API endpoint definitions
-│   │   └── ...                  # Other backend modules
-│   ├── db                       # Database-related scripts and utilities
-│   ├── tests                    # Contains test files
-│   └── ...                      # Additional backend files/folders
-├── frontend                     # Houses the Angular application
-│   ├── pms                      # Main Angular project folder
-│   │   ├── angular.json         # Angular CLI configuration (build/serve settings)
-│   │   ├── package.json         # Lists Node.js dependencies
-│   │   ├── proxy.conf.json      # Proxy configuration to route API calls to the backend
-│   │   ├── src                  # Angular source code (components, services, etc.)
-│   │   └── ...                  # Other Angular config files/folders
-└── README.md                    # Provides an overview and setup instructions
 
