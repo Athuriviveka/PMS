@@ -34,29 +34,38 @@ Ensure you have the following installed on your system:
    ```bash
    cd backend
 2. Install Dependencies
-  ```bash
-  pip install -r requirements.txt
+   ```bash
+   pip install -r requirements.txt
 
 3. Start the FastAPI server:
    ```bash
    uvicorn backend.app.main:app --reload
 
-3. Start the FastAPI server:
-uvicorn backend.app.main:app --reload
 
-Frontend Setup
+###Frontend Setup
 
-Navigate to the frontend directory:
-cd frontend
+1.Navigate to the frontend directory:
+  ```bash
+  cd frontend
+```
 
-Install dependencies:
-npm install
+### Frontend Setup
 
-Start the Angular development server:
-ng serve
+1. Navigate to the frontend directory:
+  ```bash
+  cd frontend
+```
 
-Proxy Configuration
+2. Install dependencies:
+  ```bash
+  npm install
+  ```
+
+3. Start the Angular development server:
+  ```bash
+  ng serve
+  ```
+
+### Proxy Configuration
 
 Configure the Angular proxy (proxy.conf.json) to route /api calls to http://localhost:8000.
-
-
