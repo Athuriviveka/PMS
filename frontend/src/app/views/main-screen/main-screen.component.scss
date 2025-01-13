@@ -1,7 +1,7 @@
 /* General Body Styling */
 body {
     font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     background-color: #f4f7fc;
   }
   
@@ -13,7 +13,7 @@ body {
   
     button {
       margin-left: 8px;
-      font-size: 16px;
+      font-size: 15px;
   
       &.add-payment-button {
         background-color: #4caf50; /* Green background */
@@ -54,7 +54,7 @@ body {
     }
   
     mat-card-subtitle {
-      font-size: 18px;
+      font-size: 14px;
       font-style: italic;
     }
   }
@@ -80,7 +80,7 @@ body {
   
   /* Row Colors with Reduced Height */
   mat-row {
-    font-size: 30px;
+    font-size: 15px;
     padding: 12px 16px; /* Reduced padding for height adjustment */
     line-height: 1.5; /* Adjust line height for compactness */
   
@@ -103,13 +103,13 @@ body {
     background-color: #e3f2fd;
     color: #0d47a1;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 15px;
     text-align: left;
     padding: 12px 16px; /* Adjusted padding for header cell */
   }
   
   mat-cell {
-    font-size: 10px;
+    font-size: 15px;
     padding: 10px 14px; /* Adjusted padding for data cell */
   }
   
@@ -117,8 +117,8 @@ body {
   mat-table,
   mat-header-row,
   mat-row {
-    border-left: 1px solid #b0bec5;
-    border-right: 1px solid #b0bec5;
+    border-left: 2px solid #b0bec5;
+    border-right: 2px solid #b0bec5;
   }
   
   mat-header-row:first-child {
@@ -131,7 +131,7 @@ body {
   
   /* Action Icons in Table */
   mat-icon {
-    font-size: 20px;
+    font-size: 17px;
     cursor: pointer;
     transition: transform 0.3s ease, color 0.3s ease;
   
@@ -169,7 +169,7 @@ body {
       }
   
       span {
-        font-size: 16px;
+        font-size: 15px;
         font-weight: bold;
       }
     }
@@ -177,9 +177,9 @@ body {
 
   .filter-controls {
     display: flex;
-    flex-wrap: wrap; /* Make it responsive */
+    // flex-wrap: wrap; /* Make it responsive */
     gap: 16px; /* Space between filter elements */
-    margin-bottom: 24px; /* Space below the filter section */
+    margin-bottom: 14px; /* Space below the filter section */
   
     mat-form-field {
       flex: 1 1 200px; /* Flexible width with a minimum size */
@@ -195,7 +195,7 @@ body {
     }
   
     mat-select {
-      font-size: 14px; /* Adjust dropdown font size */
+      font-size: 12px; /* Adjust dropdown font size */
     }
   }
   
@@ -206,12 +206,12 @@ body {
   
   @media (max-width: 768px) {
     .mat-row, .mat-header-row {
-      height: 20px; /* Reduce row height on smaller screens */
+      height: 10px; /* Reduce row height on smaller screens */
     }
   
     .mat-card {
       font-size: 12px; /* Smaller font size for mobile */
-      padding: 6px; /* Adjust padding */
+      padding: 10px; /* Adjust padding */
     }
   
     .mat-card-title {
@@ -219,4 +219,69 @@ body {
     }
   }
   
+  /* Container for the top bar with filters and actions */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  /* Styling for filter controls */
+  .filter-controls {
+    display: flex;
+    // flex-wrap: wrap;
+    gap: 10px;
+    flex: 1; /* Take remaining space */
+  }
+  
+  .filter-controls mat-form-field {
+    flex: 1 1 100px;
+    max-width: 200px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    // box-shadow: 0px 1px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styling for action buttons */
+  .action-buttons {
+    display: flex;
+    gap: 1px;
+  }
+  
+  .action-buttons button {
+    background-color: #1976d2;
+    color: white;
+  }
+  
+  .action-buttons .add-payment-button {
+    background-color: #4caf50;
+  }
+  
+  .action-buttons .import-csv-button {
+    background-color: #1976d2;
+  }
+  
+  .action-buttons mat-icon {
+    margin-right: 8px;
+    color: white;
+  }
+  
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .top-bar {
+      flex-direction: column;
+    //   align-items: flex-start;
+    }
+  
+    .action-buttons {
+    //   justify-content: flex-end;
+      width: 60%;
+      margin-top: 8px;
+    }
+  
+    .filter-controls {
+      width: 100%;
+    }
+  }
   

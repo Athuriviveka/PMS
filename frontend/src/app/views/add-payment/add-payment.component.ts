@@ -86,7 +86,7 @@ export class AddPaymentComponent implements OnInit {
         (country) => country.alpha2Code === countryCode
       );
       this.cities = selectedCountry?.cities || [];
-      this.states = []; // Optionally reset states
+      this.states = []; 
     });
   }
 
@@ -98,7 +98,7 @@ export class AddPaymentComponent implements OnInit {
             name: item.country, // Country name
             alpha2Code: item.iso2, // Country code
             cities: item.cities, // Cities within the country
-            states: item.states || [], // Include states if available
+            states: item.states || [], 
           }));
           console.log('Countries with states:', this.countries);
         } else {

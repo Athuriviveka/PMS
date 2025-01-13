@@ -1,78 +1,75 @@
 <mat-card class="overview-card">
-  <mat-card-title>Payments Overview</mat-card-title>
+  <mat-card-title>Payment Hub</mat-card-title>
   <mat-card-subtitle>
-    Manage your payments effectively with the below actions
+    Effortlessly handle all your transactions.
   </mat-card-subtitle>
 </mat-card>
 
 
-<div class="filter-controls">
-  <mat-form-field appearance="outline">
-    <mat-label>Filter by Status</mat-label>
-    <mat-select [(ngModel)]="filters.status" (selectionChange)="applyFilters()" >
-      <mat-option value="">All</mat-option>
-      <mat-option value="due_now">Due Now</mat-option>
-      <mat-option value="overdue">Overdue</mat-option>
-      <mat-option value="pending">Pending</mat-option>
-      <mat-option value="completed">Completed</mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="top-bar">
+  <!-- Filter Controls -->
+  <div class="filter-controls">
+    <mat-form-field appearance="outline">
+      <mat-label>Filter by Status</mat-label>
+      <mat-select [(ngModel)]="filters.status" (selectionChange)="applyFilters()">
+        <mat-option value="">All</mat-option>
+        <mat-option value="due_now">Due Now</mat-option>
+        <mat-option value="overdue">Overdue</mat-option>
+        <mat-option value="pending">Pending</mat-option>
+        <mat-option value="completed">Completed</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Search by Email</mat-label>
-    <input
-      matInput
-      placeholder="Enter email"
-      [(ngModel)]="filters.searchByemail"
-      (ngModelChange)="applyFilters()"
-    />
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Search by Email</mat-label>
+      <input
+        matInput
+        placeholder="Enter email"
+        [(ngModel)]="filters.searchByemail"
+        (ngModelChange)="applyFilters()"
+      />
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Filter by Country</mat-label>
-    <mat-select [(ngModel)]="filters.country" (selectionChange)="applyFilters()">
-      <mat-option value="">All</mat-option>
-      <mat-option *ngFor="let country of countries" [value]="country.code">
-        {{ country.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  
+    <mat-form-field appearance="outline">
+      <mat-label>Filter by Country</mat-label>
+      <mat-select [(ngModel)]="filters.country" (selectionChange)="applyFilters()">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let country of countries" [value]="country.code">
+          {{ country.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Search by Name</mat-label>
-    <input
-      matInput
-      placeholder="Enter name"
-      [(ngModel)]="filters.searchByname"
-      (ngModelChange)="applyFilters()"
-    />
-  </mat-form-field>
-</div>
+    <mat-form-field appearance="outline">
+      <mat-label>Search by Name</mat-label>
+      <input
+        matInput
+        placeholder="Enter name"
+        [(ngModel)]="filters.searchByname"
+        (ngModelChange)="applyFilters()"
+      />
+    </mat-form-field>
+  </div>
 
+  <!-- Action Buttons -->
+  <div class="action-buttons">
+    <button
+      mat-raised-button
+      color="primary"
+      matTooltip="Click to add a new payment"
+      [routerLink]="'/add-payment'"
+      class="add-payment-button"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
 
-<div class="action-buttons">
-  <!-- Add New Payment Button -->
-
-  <button
-    mat-raised-button
-    color="primary"
-    matTooltip="Click to add a new payment"
-    [routerLink]="'/add-payment'"
-    class="add-payment-button"
-  >
-    <mat-icon>add</mat-icon>
-  </button>
-
-
-  <!-- Import CSV Button -->
     <button
       mat-raised-button
       matTooltip="Upload payment details from a CSV file"
       (click)="fileInput.click()"
       class="import-csv-button"
     >
-      <mat-icon>file_upload</mat-icon> 
+      <mat-icon>file_upload</mat-icon>
     </button>
     <input
       #fileInput
@@ -81,7 +78,7 @@
       style="display: none"
       (change)="uploadCsv($event)"
     />
-  
+  </div>
 </div>
 
 <!-- Payments Table -->
