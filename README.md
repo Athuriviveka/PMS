@@ -64,9 +64,9 @@ Configure the Angular proxy (proxy.conf.json) to route /api calls to http://loca
 
 ### Future Improvements
 
-Use elastic search for faster text search
-Implement role-based access control for secure access.
-Use WebSocket for real-time payment status changes.
-Add responsive design for mobile devices.
+-Use elastic search for faster text search.  
+-Implement role-based access control for secure access.  
+-Use WebSocket for real-time payment status changes.  
+-Add responsive design for mobile devices.  
 
 
