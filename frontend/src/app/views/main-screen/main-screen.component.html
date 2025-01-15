@@ -109,6 +109,16 @@
     </mat-cell>
   </ng-container>
 
+  
+  <ng-container matColumnDef="total_due">
+    <mat-header-cell *matHeaderCellDef> Total due </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{ element.total_due | currency:element.currency }}
+    </mat-cell>
+  </ng-container>
+
+
+
   <!-- Due Date Column -->
   <ng-container matColumnDef="payee_due_date">
     <mat-header-cell *matHeaderCellDef> Due Date </mat-header-cell>

@@ -21,6 +21,7 @@ displayedColumns: string[] = [
   'payee_email',
   'payee_address',
   'due_amount',
+  'total_due',
   'actions'
 ];
 

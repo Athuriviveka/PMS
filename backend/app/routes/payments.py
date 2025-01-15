@@ -1,6 +1,7 @@
 import mimetypes
 import unicodedata
 
+import pycountry
 from fastapi import Request
 from fastapi.responses import StreamingResponse
 
@@ -17,6 +18,7 @@ from backend.app.utils.calculations import calculate_total_due
 import pandas as pd
 from io import StringIO
 from datetime import datetime, date
+from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
@@ -36,13 +38,7 @@ def normalize_and_upsert(payment_data: dict):
         if isinstance(value, date):
             payment_data[key] = datetime.combine(value, datetime.min.time())
 
-    # Generate a unique identifier using a composite key
-    unique_id = {
-        "payee_email": payment_data["payee_email"],
-        "payee_due_date": payment_data["payee_due_date"],
-    }
-
-    # Validate country code
+    # Validate the country code
     country_code = payment_data.get("payee_country")
     if not country_code or not is_valid_country_code(country_code):
         raise ValueError(f"Invalid country code: {country_code}")
@@ -54,12 +50,16 @@ def normalize_and_upsert(payment_data: dict):
         payment_data.get("tax_percent", 0)
     )
 
-    # Perform upsert with the composite key
-    payments_collection.update_one(
-        unique_id,
-        {"$set": payment_data},
-        upsert=True
-    )
+    # If _id is provided, update (or insert if not found). Otherwise, just insert.
+    if "_id" in payment_data:
+        payments_collection.update_one(
+            {"_id": payment_data["_id"]},
+            {"$set": payment_data},
+            upsert=True
+        )
+    else:
+        payments_collection.insert_one(payment_data)
+
 
 
 
@@ -79,19 +79,34 @@ async def upload_csv(file: UploadFile = File(...)):
     contents = await file.read()
     df = pd.read_csv(StringIO(contents.decode("utf-8")))
 
+    invalid_rows = []  # Track rows that don't match the schema
+
     # Validate and normalize rows
-    for _, row in df.iterrows():
+    for index, row in df.iterrows():
         try:
             payment_data = row.to_dict()
 
             # Enforce default status
             payment_data["payee_payment_status"] = payment_data.get("payee_payment_status", "pending")
 
-            # Validate and normalize
+            # Validate and normalize row using the Payment schema
             payment = Payment(**payment_data)
+
+            # If valid, upsert into MongoDB
             normalize_and_upsert(payment.dict())
         except Exception as e:
-            raise HTTPException(status_code=400, detail=f"Error in data: {e}")
+            # If row doesn't match schema, track its index or details
+            invalid_rows.append({"row_index": index, "error": str(e)})
+
+    if invalid_rows:
+        # Optionally, return information about skipped rows
+        return JSONResponse(
+            status_code=207,
+            content={
+                "message": "CSV processed with some rows skipped due to errors.",
+                "invalid_rows": invalid_rows
+            }
+        )
 
     return {"message": "CSV data processed successfully"}
 
@@ -173,7 +188,7 @@ def get_payments(
                     new_status = "overdue"
 
             # Update status in the database if it has changed
-            if new_status != payment.get("payee_payment_status"):
+            # if new_status != payment.get("payee_payment_status"):
                 payments_collection.update_one(
                     {"_id": ObjectId(payment["_id"])},
                     {"$set": {"payee_payment_status": new_status}}
@@ -321,3 +336,25 @@ def download_evidence(payment_id: str):
             "Content-Disposition": f"attachment; filename=\"{evidence_filename}\""
         }
     )
+
+
+@router.get("/countries", response_model=dict)
+def get_countries():
+    try:
+        # Aggregate distinct country codes
+        country_codes = payments_collection.distinct("payee_country")
+        countries = []
+
+        for code in country_codes:
+            if code:
+                # Use pycountry to map code to name
+                country = pycountry.countries.get(alpha_2=code.upper())
+                if country:
+                    countries.append({"code": code, "name": country.name})
+
+        if not countries:
+            return JSONResponse(content={"message": "No countries found"}, status_code=404)
+
+        return {"countries": countries}
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
